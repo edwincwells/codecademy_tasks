@@ -1,2 +1,2 @@
 # codecademy_tasks
-Data Science Career Path
+Tasks from the Data Science Career Path
