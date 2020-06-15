@@ -1,0 +1,79 @@
+Last login: Mon Jun 15 14:55:45 on ttys000
+(base) edwin@Edwins-MBP ~ % pwd 
+/Users/edwin
+(base) edwin@Edwins-MBP ~ % cd Desktop
+(base) edwin@Edwins-MBP Desktop % ls
+13233141_10209256993962997_1169474247935987246_n.jpg
+Data Science Course
+Films
+MSM
+PSD
+Yonder
+db.sqlite
+iOS Dev
+population_queries.sql
+prodmgmt
+sql-population-queries-part-ii-starting
+sqlite-tools-osx-x86-3310100
+(base) edwin@Edwins-MBP Desktop % sqlite3 db.sqlite
+SQLite version 3.31.1 2020-01-27 19:55:54
+Enter ".help" for usage hints.
+sqlite> .schema
+CREATE TABLE countries (
+      id INTEGER NOT NULL,
+      name TEXT NOT NULL,
+      continent TEXT NOT NULL,
+      PRIMARY KEY(id)
+    );
+CREATE TABLE population_years (
+      id INTEGER NOT NULL,
+      population NUMBER,
+      year NUMBER,
+      country_id INTEGER NOT NULL,
+      PRIMARY KEY(id),
+      FOREIGN KEY(country_id) REFERENCES countries(id)
+    );
+sqlite> SELECT countries
+   ...> 
+   ...> ;
+Error: no such column: countries
+sqlite> SELECT name
+   ...> FROM countries
+   ...> LIMIT 10;
+Bermuda
+Canada
+Greenland
+Mexico
+Saint Pierre and Miquelon
+United States
+Antigua and Barbuda
+Argentina
+Aruba
+Bahamas, The
+sqlite> SELECT COUNT(name)
+   ...> FROM countries
+   ...> ;
+214
+sqlite> SELECT COUNT*
+   ...> FROM countries
+   ...> WHERE name = "Africa";
+Error: near "FROM": syntax error
+sqlite> SELECT COUNT(*)
+   ...> FROM countries;
+214
+sqlite> SELECT COUNT(*)
+   ...> FROM countries
+   ...> WHERE name = 'Africa';
+0
+sqlite> SELECT COUNT(*)
+   ...> FROM countries
+   ...> WHERE continent = 'Africa';
+56
+sqlite> SELECT SUM(population_years.population) AS 'Population of Oceania in 2005 (in millions)'
+
+   ...> FROM countries
+   ...> JOIN population_years
+   ...> ON countries.id = population_years.country_id
+   ...> WHERE countries.continent = 'Oceania' AND population_years.year = 2005;
+32.66417
+sqlite> 
