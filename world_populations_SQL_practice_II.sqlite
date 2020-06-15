@@ -1,0 +1,61 @@
+--How many entries in the countries table are from Africa?--
+
+SELECT COUNT(DISTINCT name)
+FROM countries
+WHERE continent = 'Africa';
+--56--
+
+--What was the total population of the continent of Oceania in 2005?--
+
+SELECT SUM(population_years.population) AS 'Population of Oceania in 2005 (in millions)'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE countries.continent = 'Oceania' AND population_years.year = 2005;
+--32.66417--
+
+--What is the average population of countries in South America in 2003?--
+
+SELECT AVG(population_years.population) AS 'AVG pop. of countries in South America in 2003 (in millions)'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE countries.continent = 'South America' AND population_years.year = 2003;
+--25.8906514285714--
+
+--What country had the smallest population in 2007?--
+
+SELECT countries.name AS 'Country', MIN(population_years.population) AS 'Smallest pop.'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE population_years.year = 2007;
+--Niue, 0.00216--
+
+--What is the average population of Poland during the time period covered by this dataset?--
+
+SELECT AVG(population_years.population) AS 'AVG pop. of Poland (in millions)'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE countries.name = 'Poland';
+--38.5606790909091--
+
+--How many countries have the word “The” in their name?--
+
+SELECT COUNT(name) AS 'Countries with "The" in their name'
+FROM countries
+WHERE name LIKE '%The%';
+--4--
+
+--What was the total population of each continent in 2010?--
+
+SELECT countries.continent AS 'Continent', SUM(population_years.population) AS 'Total Population in 2010 (in millions)'
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE population_years.year = '2010'
+GROUP BY 1
+ORDER BY 2 DESC;
+--Asia 4133.09148, Africa 1015.47846, Europe 723.06044, North America 539.79456, South America 396.58235, Oceania 34.95696--
+
